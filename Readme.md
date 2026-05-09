@@ -105,6 +105,15 @@ See [Development](#development) below for how to install and run these locally.
 ### CI/CD
 - GitHub Actions workflow: build the Docker image on every push and pull request to catch broken builds early.
 
+### Testing
+An integration test suite that exercises the full pipeline end-to-end:
+
+| Test | Description | Status |
+|------|-------------|--------|
+| Hash extraction | Run container against a committed fixture PDF (owner-password set, known hash) and assert output matches expected `$pdf$` format | Planned |
+| Hash crackability | Feed extracted hash to `hashcat --self-test` or a wordlist containing the known password and assert a match | Planned |
+| No output on non-PDF | Assert container exits non-zero and prints a useful error when given a plain text file | Planned |
+
 ### Usability
 - Accept a directory path and process all PDFs found within it (batch mode).
 - Optional `--output-file` flag to write hashes directly to a file instead of stdout.
