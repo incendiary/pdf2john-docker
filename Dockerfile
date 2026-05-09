@@ -1,5 +1,5 @@
 # Use an existing docker image which has Perl already installed
-FROM perl:slim
+FROM perl:5.40-slim
 
 # Set the working directory in the container
 WORKDIR /app
