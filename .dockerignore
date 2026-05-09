@@ -1,0 +1,5 @@
+.git
+.gitignore
+.pre-commit-config.yaml
+.DS_Store
+*.md
