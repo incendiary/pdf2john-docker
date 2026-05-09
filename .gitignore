@@ -3,6 +3,7 @@
 
 # Test artefacts — never commit real PDFs or crack output
 *.pdf
+!tests/fixtures/*.pdf
 hash
 *.hash
 
