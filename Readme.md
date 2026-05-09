@@ -161,3 +161,7 @@ Third-party Perl files (`pdf2john.pl`, `lib/`) are excluded from all style hooks
 
 - `pdf2john.pl` and `lib/` — [ExifTool](https://exiftool.org/) by Phil Harvey; adapted by Dhiru Kholia as part of the [john](https://github.com/openwall/john) project.
 - Docker packaging — this repository.
+
+---
+
+> **Note:** This repository was built with heavy assistance from [Claude](https://claude.ai) (Anthropic). The code and configuration should work, but not everything has been manually verified end-to-end. If you run into something broken, PRs and fixes are very welcome.
