@@ -2,7 +2,7 @@
 
 This Docker image wraps the `pdf2john.pl` script, which is used to extract hashes from PDF files. These hashes can then be cracked using a tool such as Hashcat.
 
-**This build expects the target file to be placed under `/mnt/target/target.pdf`.** 
+**This build expects the target file to be placed under `/mount/target/target.pdf`.**
 
 ## Building the Image
 
@@ -46,7 +46,7 @@ When you run this command, Docker will start building the image, and you should 
 
 After the image is built, it is named pdf2john and stored locally. You can now use this Docker image to run the pdf2john.pl script.
 
-# Hashcat Demonstration
+## Hashcat Demonstration
 
 ## Extract and Identify the Hash
 
@@ -63,7 +63,7 @@ This command will print out a line with the format `<filename>:$pdf$...`.
 3. Remove the filename from the hash (the part before `:$pdf$...`) and save the hash into a file.  
 
     ```bash
-    echo "$pdf$5*5*256*-1028*1*16*20583814402184226866485332754315*127*f95d927a94829db8e2fbfbc9726ebe0a391b22a084ccc2882eb107a74f7884812058381440218422686648533275431500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*127*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*32*0000000000000000000000000000000000000000000000000000000000000000*32*0000000000000000000000000000000000000000000000000000000000000000" > hash
+    echo '$pdf$5*5*256*-1028*1*16*20583814402184226866485332754315*127*f95d927a94829db8e2fbfbc9726ebe0a391b22a084ccc2882eb107a74f7884812058381440218422686648533275431500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*127*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*32*0000000000000000000000000000000000000000000000000000000000000000*32*0000000000000000000000000000000000000000000000000000000000000000' > hash
     ```
 
     You can use cut to help here:
@@ -87,3 +87,61 @@ This command will print out a line with the format `<filename>:$pdf$...`.
 
 	$pdf$5*5*256*-1028*1*16*20583814402184226866485332754315*127*f95d927a94829db8e2fbfbc9726ebe0a391b22a084ccc2882eb107a74f7884812058381440218422686648533275431500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*127*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*32*0000000000000000000000000000000000000000000000000000000000000000*32*0000000000000000000000000000000000000000000000000000000000000000:hashcat
 	```
+
+## Roadmap
+
+### Code Quality Enforcement
+Enforce consistent, reviewable code on everything we own (Dockerfile, scripts, docs). Third-party Perl source (`pdf2john.pl`, `lib/`) is intentionally excluded — it is upstream code by Phil Harvey and Dhiru Kholia and should not be reformatted.
+
+| Tool | Purpose | Status |
+|------|---------|--------|
+| `hadolint` | Lint `Dockerfile` for best-practice violations | Done |
+| `pre-commit` | Run all checks automatically as a git hook before every commit | Done |
+| `detect-private-key` | Prevent accidental commit of private keys or secrets | Done |
+| `trailing-whitespace` / `end-of-file-fixer` | Keep owned files clean | Done |
+
+See [Development](#development) below for how to install and run these locally.
+
+### CI/CD
+- GitHub Actions workflow: build the Docker image on every push and pull request to catch broken builds early.
+
+### Usability
+- Accept a directory path and process all PDFs found within it (batch mode).
+- Optional `--output-file` flag to write hashes directly to a file instead of stdout.
+- Shell wrapper script (`pdf2john.sh`) to reduce the volume-mount boilerplate.
+
+---
+
+## Development
+
+### Prerequisites
+
+```bash
+pip install pre-commit
+```
+
+### Install the git hooks
+
+```bash
+pre-commit install
+```
+
+After this, every `git commit` automatically runs the configured hooks. To run
+them manually against all files:
+
+```bash
+pre-commit run --all-files
+```
+
+### What the hooks check
+
+- **hadolint** — lints the `Dockerfile` against Docker best-practice rules
+- **detect-private-key** — blocks any file containing a private key pattern
+- **trailing-whitespace / end-of-file-fixer** — keeps owned files tidy
+
+Third-party Perl files (`pdf2john.pl`, `lib/`) are excluded from all style hooks.
+
+## Credits
+
+- `pdf2john.pl` and `lib/` — [ExifTool](https://exiftool.org/) by Phil Harvey; adapted by Dhiru Kholia as part of the [john](https://github.com/openwall/john) project.
+- Docker packaging — this repository.
