@@ -5,7 +5,7 @@ FROM perl:slim
 WORKDIR /app
 
 # Copy the required Perl libraries from your local system to the Docker image
-ADD lib /app/lib
+COPY lib /app/lib
 
 # Copy your Perl script to the Docker image
 COPY ./pdf2john.pl /app/
