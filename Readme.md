@@ -164,4 +164,4 @@ Third-party Perl files (`pdf2john.pl`, `lib/`) are excluded from all style hooks
 
 ---
 
-> **Note:** This repository was built with heavy assistance from [Claude](https://claude.ai) (Anthropic). The code and configuration should work, but not everything has been manually verified end-to-end. If you run into something broken, PRs and fixes are very welcome.
+> **Note:** [Claude](https://claude.ai) (Anthropic) was involved in parts of this repository's development. The code and configuration should work, but not everything has been manually verified end-to-end. If you run into something broken, PRs and fixes are very welcome.
