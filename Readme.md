@@ -90,6 +90,13 @@ This command will print out a line with the format `<filename>:$pdf$...`.
 
 ## Roadmap
 
+| Issue | Area | Description | Status |
+|-------|------|-------------|--------|
+| [#1](https://github.com/incendiary/pdf2john-docker/issues/1) | Security | Add gitleaks pre-commit hook; confirm history clean | Done |
+| [#2](https://github.com/incendiary/pdf2john-docker/issues/2) | Dockerfile | Replace `ADD` with `COPY`; pin base image to `perl:5.40-slim` | Done |
+| [#3](https://github.com/incendiary/pdf2john-docker/issues/3) | CI/CD | GitHub Actions workflow: build Docker image on every push and PR | Done |
+| [#4](https://github.com/incendiary/pdf2john-docker/issues/4) | Testing | Integration tests: hash extraction, crackability, non-PDF error handling | Planned |
+
 ### Code Quality Enforcement
 Enforce consistent, reviewable code on everything we own (Dockerfile, scripts, docs). Third-party Perl source (`pdf2john.pl`, `lib/`) is intentionally excluded — it is upstream code by Phil Harvey and Dhiru Kholia and should not be reformatted.
 
@@ -97,16 +104,16 @@ Enforce consistent, reviewable code on everything we own (Dockerfile, scripts, d
 |------|---------|--------|
 | `hadolint` | Lint `Dockerfile` for best-practice violations | Done |
 | `pre-commit` | Run all checks automatically as a git hook before every commit | Done |
-| `detect-private-key` | Prevent accidental commit of private keys or secrets | Done |
+| `detect-private-key` / `gitleaks` | Prevent accidental commit of private keys or secrets | Done |
 | `trailing-whitespace` / `end-of-file-fixer` | Keep owned files clean | Done |
 
 See [Development](#development) below for how to install and run these locally.
 
 ### CI/CD
-- GitHub Actions workflow: build the Docker image on every push and pull request to catch broken builds early.
+- [#3](https://github.com/incendiary/pdf2john-docker/issues/3) GitHub Actions workflow: build the Docker image on every push and pull request to catch broken builds early. **Done.**
 
 ### Testing
-An integration test suite that exercises the full pipeline end-to-end:
+An integration test suite that exercises the full pipeline end-to-end ([#4](https://github.com/incendiary/pdf2john-docker/issues/4)):
 
 | Test | Description | Status |
 |------|-------------|--------|
