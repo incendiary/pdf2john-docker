@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Test artefacts — never commit real PDFs or crack output
+*.pdf
+!tests/fixtures/*.pdf
+hash
+*.hash
+
+# Editor temporaries
+*.swp
+*.swo
+*~
+
+# pre-commit cache
+.pre-commit-cache/
