@@ -11,7 +11,7 @@ jobs:
     name: Detect Secrets
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Baseline check
         run: |
           pip install --quiet detect-secrets
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: detect-secrets
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build
         run: docker build -t pdf2john .
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [detect-secrets, build]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build
         run: docker build -t pdf2john .
