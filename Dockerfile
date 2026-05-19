@@ -1,5 +1,6 @@
 # Use an existing docker image which has Perl already installed
-FROM perl:5.40-slim
+# Pinned to 5.40.2-slim — update intentionally when upgrading Perl
+FROM perl:5.40.2-slim AS runtime
 
 # Set the working directory in the container
 WORKDIR /app
@@ -15,3 +16,14 @@ RUN chmod +x /app/pdf2john.pl
 
 # Set the command that will be executed when Docker runs your container
 CMD ["/app/pdf2john.pl", "/mount/target/target.pdf"]
+
+# -------------------------------------------------------------------
+# test stage — build with: docker build --target test .
+# Runs pdf2john.pl against the committed fixture and asserts $pdf$ output.
+# Not part of the default build target.
+# -------------------------------------------------------------------
+FROM runtime AS test
+COPY tests/fixtures/protected.pdf /tmp/test.pdf
+RUN perl /app/pdf2john.pl /tmp/test.pdf | grep -q '\$pdf\$' \
+    && echo "PASS: pdf2john smoke test" \
+    || { echo "FAIL: no \$pdf\$ hash in output"; exit 1; }
