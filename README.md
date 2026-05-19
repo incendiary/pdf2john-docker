@@ -179,6 +179,10 @@ Third-party Perl files (`pdf2john.pl`, `lib/`) are excluded from all style hooks
 | #5 | ✅ Done | Tests (hash extraction + non-PDF rejection, wired to CI via `make test`) |
 | #6 | ✅ Done | Documentation |
 | #7 | ✅ Done | Branch protection |
+| [#9](https://github.com/incendiary/pdf2john-docker/issues/9) | ✅ Done | GHCR auto-publish on `v*.*.*` git tag |
+| [#10](https://github.com/incendiary/pdf2john-docker/issues/10) | ✅ Done | Dockerfile `test` stage — smoke test against fixture PDF (`--target test`) |
+| [#11](https://github.com/incendiary/pdf2john-docker/issues/11) | ✅ Done | Pin base image to `perl:5.40.2-slim` |
+| [#12](https://github.com/incendiary/pdf2john-docker/issues/12) | ✅ Done | detect-secrets baseline and pre-commit hook |
 
 > This project was uplifted for public release with the assistance of Claude (Anthropic).
 > Things should work, but some paths may not have been fully re-tested. PRs and fixes welcome.
